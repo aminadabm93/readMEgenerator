@@ -1,19 +1,17 @@
-// function to generate markdown for README
-// function generateMarkdown(data) {
-//   const {title, description, toc, installation, usage, license, contributing, test, gitHub,email} = data;
-//   console.log(data);
-//   console.log("The title of your read.me is"+ title);
-  
-//   return `# ${data.title}`;
-// }
-
+//list of licenses with link
+var licenses = {
+  "apache":"[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)",
+  "creative common":"[![License: CC BY 4.0](https://licensebuttons.net/l/by/4.0/80x15.png)](http://creativecommons.org/licenses/by/4.0/)",
+  "eclipse": "[![License](https://img.shields.io/badge/License-EPL%201.0-red.svg)](https://opensource.org/licenses/EPL-1.0)",
+};
 module.exports = {generateMarkdown: function (data){
+  //saving all user answers
   const {title, description, installation, usage, license, contributing, test, gitHub,email,communicate} = data;
-  console.log(data);
   
   return `#${title}
   
   #Description: ${description}
+  ${licenses[license]}
   
   #Table of Contents
   1. [Installation](#installation)
@@ -24,12 +22,18 @@ module.exports = {generateMarkdown: function (data){
   6. [Questions](#)
   
   #Installation: ${installation}
+
   #Usage: ${usage}
-  #License: ${license}
+
+  #License: This software is using the ${license} license. 
+
   #Contributing: ${contributing}
+
   #Test: ${test}
-  #Questions: [github](https://github.com/${gitHub})
-  [email](${email}) 
-  ${communicate}`;
+
+  #Questions: ${communicate};
+  [github](https://github.com/${gitHub})
+  [email](${email}) `
+  
   //questions section has link to github and linked in 
 }};
