@@ -25,6 +25,15 @@
 
 const inquirer = require("inquirer");
 const fs = require("fs");
+var create = require("./generateMarkdown");    
+
+var licenses = {
+    "apache":"[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)",
+    "creative common":"[![License: CC BY 4.0](https://licensebuttons.net/l/by/4.0/80x15.png)](http://creativecommons.org/licenses/by/4.0/)",
+    "eclipse": "[![License](https://img.shields.io/badge/License-EPL%201.0-red.svg)](https://opensource.org/licenses/EPL-1.0)",
+};
+
+console.log(licenses["creative common"]);
 
 var questions = [{
     message:"What should the title be?",
@@ -33,10 +42,6 @@ var questions = [{
 },{
     message:"Give a description.",
     name:"description",
-    type:"input"
-},{
-    message:"Create a table of contents seperated by a comma.",
-    name:"toc",
     type:"input"
 },{
     message:"Give some installation instructions.",
@@ -50,7 +55,7 @@ var questions = [{
     message:"Select a type of license you'd like",
     name:"license",
     type:"list",
-    choices: ["choice 1","choice 2","choice 3"]
+    choices: licenses
 },{
     message:"Give contributing instructions",
     name:"contributing",
@@ -67,12 +72,12 @@ var questions = [{
     message:"Please enter your email. ",
     name:"email",
     type:"input"
+},{
+    message:"Please enter instructions on how to reach you. ",
+    name:"communicate",
+    type:"input"
 }];
 
-
-// function to write README file
-// function writeToFile(fileName, data) {
-// }
 
 // function to initialize program
 async function init() {
@@ -81,11 +86,13 @@ async function init() {
 //going to ask questions here
 
 var responses = await inquirer.prompt(questions);
-console.log(responses)
+var f = create.generateMarkdown(responses);
+fs.writeFile("readmeSamplel.md",f,function(err){
+    if(err){throw(err);}
+    console.log("success");
+});
+//save answers to document 
 
-// for(let i=0; i<questions.length;i++){
-//     const {questions[i].prompt.name} = await inquirer.prompt[questions[i]];
-// }
 }
 
 // function call to initialize program
